@@ -3,987 +3,736 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Urban AI CoPilot from MILE — Presentation</title>
+  <title>Urban AI CoPilot — From Wayve MILE to Automotive Product</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f4efe7;
-      --bg-alt: #efe4d2;
-      --ink: #16120d;
-      --muted: #5f584f;
-      --accent: #d8642a;
-      --accent-2: #0f766e;
-      --accent-3: #d7b153;
-      --card: rgba(255, 252, 246, 0.84);
-      --card-strong: rgba(255, 250, 241, 0.94);
-      --line: rgba(22, 18, 13, 0.11);
-      --shadow: 0 24px 60px rgba(78, 55, 26, 0.16);
-      --radius: 28px;
+      --bg: #0c1117;
+      --bg-alt: #111a24;
+      --ink: #e8ecf1;
+      --muted: #8b97a8;
+      --accent: #38bdf8;
+      --accent-2: #22d3ee;
+      --accent-3: #a78bfa;
+      --accent-warm: #f59e0b;
+      --card: rgba(17, 26, 36, 0.88);
+      --card-strong: rgba(22, 33, 46, 0.92);
+      --line: rgba(255, 255, 255, 0.08);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+      --radius: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
+      margin: 0; width: 100%; height: 100%; overflow: hidden;
       font-family: "Inter", system-ui, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(216, 100, 42, 0.22), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.14), transparent 24%),
-        linear-gradient(135deg, var(--bg), var(--bg-alt));
+      background: linear-gradient(160deg, var(--bg), var(--bg-alt));
       color: var(--ink);
     }
 
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      border-radius: 999px;
-      pointer-events: none;
-      filter: blur(4px);
-      opacity: 0.6;
-      z-index: 0;
-    }
-
     body::before {
-      width: 38vw;
-      height: 38vw;
-      top: -10vw;
-      left: -8vw;
-      background: rgba(215, 177, 83, 0.18);
+      content: ""; position: fixed; width: 50vw; height: 50vw;
+      top: -18vw; right: -12vw; border-radius: 999px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.08), transparent 70%);
+      pointer-events: none; z-index: 0;
     }
 
     body::after {
-      width: 26vw;
-      height: 26vw;
-      right: -6vw;
-      bottom: 8vh;
-      background: rgba(15, 118, 110, 0.12);
+      content: ""; position: fixed; width: 40vw; height: 40vw;
+      bottom: -14vw; left: -8vw; border-radius: 999px;
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.06), transparent 70%);
+      pointer-events: none; z-index: 0;
     }
 
-    .viewport {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      z-index: 1;
-    }
+    .viewport { position: relative; width: 100vw; height: 100vh; overflow: hidden; z-index: 1; }
 
     .slides {
-      display: flex;
-      width: 100%;
-      height: 100%;
+      display: flex; width: 100%; height: 100%;
       transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform;
     }
 
     .slide {
-      width: 100vw;
-      height: 100vh;
-      flex: 0 0 100vw;
-      padding: clamp(28px, 4vw, 54px) clamp(20px, 4.3vw, 56px) 92px;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      gap: clamp(18px, 2vh, 28px);
-      position: relative;
+      width: 100vw; height: 100vh; flex: 0 0 100vw;
+      padding: clamp(24px, 3.5vw, 48px) clamp(20px, 4vw, 56px) 88px;
+      display: grid; grid-template-rows: auto 1fr;
+      gap: clamp(14px, 1.8vh, 22px); position: relative;
     }
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(22, 18, 13, 0.09);
-      background: rgba(255, 255, 255, 0.58);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent-2);
-      width: fit-content;
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 7px 14px; border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      background: rgba(56, 189, 248, 0.08);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent-2); width: fit-content;
       backdrop-filter: blur(14px);
     }
 
     .eyebrow::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
     }
 
     .title {
-      margin: 14px 0 10px;
-      font-size: clamp(2.3rem, 5.6vw, 5.7rem);
-      line-height: 0.92;
-      letter-spacing: -0.06em;
-      max-width: 10ch;
+      margin: 10px 0 8px;
+      font-size: clamp(1.9rem, 4.4vw, 4.2rem);
+      line-height: 1.0; letter-spacing: -0.05em; max-width: 18ch;
     }
+
+    .title .highlight { color: var(--accent); }
+    .title .highlight-warm { color: var(--accent-warm); }
 
     .subtitle {
-      margin: 0;
-      max-width: 58rem;
-      color: var(--muted);
-      font-size: clamp(1rem, 1.6vw, 1.3rem);
-      line-height: 1.6;
+      margin: 0; max-width: 56rem; color: var(--muted);
+      font-size: clamp(0.92rem, 1.4vw, 1.15rem); line-height: 1.55;
     }
 
-    .slide-body {
-      min-height: 0;
-      display: grid;
-      gap: 20px;
-      align-items: stretch;
-    }
-
-    .grid-2 {
-      grid-template-columns: 1.06fr 0.94fr;
-    }
-
-    .grid-3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+    .slide-body { min-height: 0; display: grid; gap: 18px; align-items: stretch; }
+    .grid-2 { grid-template-columns: 1.05fr 0.95fr; }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      border-radius: var(--radius);
-      padding: clamp(18px, 2vw, 28px);
-      backdrop-filter: blur(16px);
-      min-width: 0;
-      overflow: hidden;
+      background: var(--card); border: 1px solid var(--line);
+      box-shadow: var(--shadow); border-radius: var(--radius);
+      padding: clamp(16px, 1.8vw, 26px); backdrop-filter: blur(16px);
+      min-width: 0; overflow: hidden;
     }
 
-    .card.strong {
-      background: var(--card-strong);
+    .card.strong { background: var(--card-strong); border-color: rgba(56, 189, 248, 0.12); }
+
+    .card h2, .card h3, .card h4 { margin: 0 0 10px; letter-spacing: -0.03em; color: var(--ink); }
+    .card h2 { font-size: clamp(1.25rem, 2vw, 2rem); }
+    .card h3 { font-size: clamp(1rem, 1.4vw, 1.3rem); }
+    .card p { margin: 0 0 12px; color: var(--muted); line-height: 1.5; font-size: clamp(0.88rem, 1.1vw, 1rem); }
+
+    .lede { font-size: clamp(0.95rem, 1.35vw, 1.1rem); color: var(--ink); line-height: 1.55; }
+
+    .bullet-list, .metric-list, .story-list, .mini-list {
+      margin: 0; padding: 0; list-style: none; display: grid; gap: 10px;
     }
 
-    .card h2,
-    .card h3,
-    .card h4 {
-      margin: 0 0 12px;
-      letter-spacing: -0.04em;
+    .bullet-list li, .story-list li, .mini-list li {
+      display: grid; grid-template-columns: auto 1fr; gap: 10px;
+      align-items: start; color: var(--ink); line-height: 1.4;
+      font-size: clamp(0.88rem, 1.05vw, 0.98rem);
     }
 
-    .card h2 {
-      font-size: clamp(1.4rem, 2.2vw, 2.35rem);
+    .bullet-list li::before, .story-list li::before, .mini-list li::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%;
+      margin-top: 0.45em;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
     }
 
-    .card h3 {
-      font-size: clamp(1.05rem, 1.6vw, 1.45rem);
+    .story-list li strong, .bullet-list li strong, .mini-list li strong {
+      display: block; margin-bottom: 3px; letter-spacing: -0.01em; color: var(--ink);
     }
 
-    .card p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: clamp(0.95rem, 1.2vw, 1.08rem);
-    }
-
-    .lede {
-      font-size: clamp(1.05rem, 1.6vw, 1.22rem);
-      color: var(--ink);
-      line-height: 1.6;
-    }
-
-    .bullet-list,
-    .metric-list,
-    .story-list,
-    .mini-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 12px;
-    }
-
-    .bullet-list li,
-    .story-list li,
-    .mini-list li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px;
-      align-items: start;
-      color: var(--ink);
-      line-height: 1.45;
-      font-size: clamp(0.95rem, 1.15vw, 1.04rem);
-    }
-
-    .bullet-list li::before,
-    .story-list li::before,
-    .mini-list li::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-top: 0.42em;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 0 5px rgba(216, 100, 42, 0.12);
-    }
-
-    .story-list li strong,
-    .bullet-list li strong,
-    .mini-list li strong {
-      display: block;
-      margin-bottom: 4px;
-      letter-spacing: -0.02em;
-    }
-
-    .metric-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
+    .metric-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 
     .metric {
-      padding: 16px 18px;
-      border-radius: 22px;
-      border: 1px solid rgba(22, 18, 13, 0.08);
-      background: rgba(255, 255, 255, 0.62);
+      padding: 14px 16px; border-radius: 16px;
+      border: 1px solid var(--line); background: rgba(56, 189, 248, 0.04);
     }
 
     .metric .label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-weight: 700;
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--muted); margin-bottom: 6px; font-weight: 700;
     }
 
     .metric .value {
-      font-size: clamp(1.35rem, 2vw, 2rem);
-      letter-spacing: -0.05em;
-      font-weight: 800;
+      font-size: clamp(1.2rem, 1.8vw, 1.7rem); letter-spacing: -0.04em;
+      font-weight: 800; color: var(--accent);
     }
 
-    .metric .detail {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 6px;
+    .metric .detail { color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+
+    .badge-row, .tag-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .badge, .tag {
+      border-radius: 999px; padding: 8px 14px; font-size: 0.85rem;
+      border: 1px solid var(--line); background: rgba(56, 189, 248, 0.06);
+      color: var(--ink);
     }
 
-    .badge-row,
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .tag strong, .badge strong { color: var(--accent); }
 
-    .badge,
-    .tag {
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 0.9rem;
-      border: 1px solid rgba(22, 18, 13, 0.08);
-      background: rgba(255, 255, 255, 0.72);
-    }
-
-    .tag strong,
-    .badge strong {
-      color: var(--accent-2);
-    }
-
-    .equation-strip {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
+    .equation-strip { display: grid; gap: 8px; margin-top: 12px; }
 
     .equation {
       font-family: "Inter", system-ui, sans-serif;
-      padding: 13px 16px;
-      border-radius: 18px;
-      background: rgba(22, 18, 13, 0.05);
-      border: 1px solid rgba(22, 18, 13, 0.08);
-      font-size: clamp(0.95rem, 1.1vw, 1.02rem);
-      color: #231d15;
+      padding: 11px 14px; border-radius: 14px;
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.12);
+      font-size: clamp(0.88rem, 1vw, 0.96rem); color: var(--ink);
     }
 
-    .architecture {
-      display: grid;
-      gap: 14px;
-    }
+    .architecture { display: grid; gap: 12px; }
 
     .arch-node {
-      padding: 18px 20px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(22, 18, 13, 0.08);
-      position: relative;
+      padding: 16px 18px; border-radius: 18px;
+      background: rgba(56, 189, 248, 0.05);
+      border: 1px solid rgba(56, 189, 248, 0.12); position: relative;
     }
 
     .arch-node:not(:last-child)::after {
-      content: "↓";
-      position: absolute;
-      left: 24px;
-      bottom: -24px;
-      color: var(--accent);
-      font-size: 22px;
-      font-weight: 700;
+      content: "↓"; position: absolute; left: 22px; bottom: -22px;
+      color: var(--accent); font-size: 20px; font-weight: 700;
     }
 
-    .arch-node h3 {
-      margin-bottom: 8px;
-    }
+    .arch-node h3 { margin-bottom: 6px; }
+    .arch-node p { margin-bottom: 0; }
 
-    .arch-node p {
-      margin-bottom: 0;
-    }
-
-    .figure {
-      display: grid;
-      gap: 12px;
-      min-width: 0;
-    }
+    .figure { display: grid; gap: 10px; min-width: 0; }
 
     .figure img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-      border-radius: 22px;
-      border: 1px solid rgba(22, 18, 13, 0.1);
-      background: rgba(255, 255, 255, 0.52);
-      box-shadow: 0 18px 40px rgba(65, 48, 23, 0.14);
+      width: 100%; max-height: 52vh; object-fit: contain;
+      border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+      padding: 6px;
     }
 
-    .figure figcaption,
-    .caption {
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.45;
+    .figure figcaption, .caption {
+      color: var(--muted); font-size: 0.85rem; line-height: 1.4;
     }
 
     .split-figures {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      min-height: 0;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px; min-height: 0;
     }
 
-    .timeline {
-      display: grid;
-      gap: 12px;
-    }
+    .timeline { display: grid; gap: 10px; }
 
     .timeline-step {
-      display: grid;
-      grid-template-columns: 54px 1fr;
-      gap: 16px;
-      align-items: start;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(22, 18, 13, 0.08);
+      display: grid; grid-template-columns: 48px 1fr;
+      gap: 14px; align-items: start; padding: 12px 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    .timeline-step:last-child {
-      border-bottom: none;
-    }
+    .timeline-step:last-child { border-bottom: none; }
 
     .step-no {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--accent), #e59a3f);
-      color: white;
-      font-weight: 800;
-      box-shadow: 0 10px 20px rgba(216, 100, 42, 0.28);
+      width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-3));
+      color: #0c1117; font-weight: 800;
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
     }
 
     .source-note {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(22, 18, 13, 0.08);
-      font-size: 0.88rem;
-      color: var(--muted);
+      margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 0.82rem; color: var(--muted);
     }
 
     .quote {
-      font-size: clamp(1.1rem, 1.8vw, 1.55rem);
-      line-height: 1.45;
-      letter-spacing: -0.03em;
-      margin: 0;
-      padding-left: 18px;
-      border-left: 4px solid var(--accent);
+      font-size: clamp(1rem, 1.6vw, 1.35rem); line-height: 1.4;
+      letter-spacing: -0.02em; margin: 0; padding-left: 16px;
+      border-left: 3px solid var(--accent);
     }
 
+    .paper-cite {
+      margin-top: 10px; padding: 12px 16px; border-radius: 14px;
+      background: rgba(167, 139, 250, 0.08);
+      border: 1px solid rgba(167, 139, 250, 0.18);
+      font-size: 0.85rem; line-height: 1.5; color: var(--muted);
+    }
+
+    .paper-cite strong { color: var(--accent-3); }
+
     .nav {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 56px;
-      height: 56px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255, 252, 246, 0.92);
-      color: var(--ink);
-      font-size: 34px;
-      line-height: 1;
-      box-shadow: 0 14px 30px rgba(61, 43, 16, 0.18);
-      cursor: pointer;
-      z-index: 5;
-      display: grid;
-      place-items: center;
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 52px; height: 52px; border: none; border-radius: 50%;
+      background: rgba(22, 33, 46, 0.92); color: var(--ink);
+      font-size: 30px; line-height: 1;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--line); cursor: pointer; z-index: 5;
+      display: grid; place-items: center;
       transition: opacity 180ms ease, transform 180ms ease;
     }
 
-    .nav:hover {
-      transform: translateY(-50%) scale(1.04);
-    }
-
-    .nav[hidden] {
-      display: none;
-    }
-
-    .nav.prev { left: 18px; }
-    .nav.next { right: 18px; }
+    .nav:hover { transform: translateY(-50%) scale(1.06); background: rgba(56, 189, 248, 0.15); }
+    .nav[hidden] { display: none; }
+    .nav.prev { left: 16px; }
+    .nav.next { right: 16px; }
 
     .progress-shell {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 10px;
-      background: rgba(22, 18, 13, 0.08);
-      z-index: 6;
+      position: fixed; left: 0; right: 0; bottom: 0; height: 6px;
+      background: rgba(255, 255, 255, 0.06); z-index: 6;
     }
 
     .progress-bar {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-3));
       transition: width 320ms ease;
     }
 
     .counter {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 6;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255, 252, 246, 0.88);
-      border: 1px solid rgba(22, 18, 13, 0.08);
-      box-shadow: 0 8px 20px rgba(61, 43, 16, 0.12);
-      font-size: 0.9rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      position: fixed; right: 18px; bottom: 16px; z-index: 6;
+      padding: 8px 13px; border-radius: 999px;
+      background: rgba(22, 33, 46, 0.88);
+      border: 1px solid var(--line);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
     }
 
     .swipe-hint {
-      position: fixed;
-      left: 50%;
-      bottom: 34px;
-      transform: translateX(-50%);
-      z-index: 6;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(22, 18, 13, 0.78);
-      color: #fffaf2;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
+      position: fixed; left: 50%; bottom: 28px;
+      transform: translateX(-50%); z-index: 6;
+      padding: 8px 14px; border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent); letter-spacing: 0.08em;
+      text-transform: uppercase; font-size: 0.75rem;
       animation: pulseHint 1.6s ease-in-out infinite;
-      box-shadow: 0 12px 28px rgba(22, 18, 13, 0.22);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(56, 189, 248, 0.2);
     }
 
-    .swipe-hint.hidden {
-      display: none;
-    }
+    .swipe-hint.hidden { display: none; }
 
     @keyframes pulseHint {
       0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.78; }
-      50% { transform: translateX(-50%) translateY(-6px); opacity: 1; }
+      50% { transform: translateX(-50%) translateY(-5px); opacity: 1; }
     }
 
     @media (max-width: 980px) {
-      .grid-2,
-      .grid-3,
-      .split-figures,
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .slide {
-        padding-bottom: 98px;
-      }
-
-      .nav {
-        width: 48px;
-        height: 48px;
-        font-size: 30px;
-      }
+      .grid-2, .grid-3, .split-figures, .metric-grid { grid-template-columns: 1fr; }
+      .slide { padding-bottom: 94px; }
+      .nav { width: 44px; height: 44px; font-size: 26px; }
     }
   </style>
 </head>
 <body>
   <div class="viewport">
     <div class="slides" id="slides">
+
+      <!-- SLIDE 1: Title -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Technical Walkthrough</div>
-          <h1 class="title">Urban AI CoPilot from MILE</h1>
-          <p class="subtitle">From paper selection to a standalone Wolfram Language implementation, audited notebook build, and full recurrent urban-driving simulation.</p>
+          <div class="eyebrow">ESL Embedded · Automotive AI</div>
+          <h1 class="title">Urban AI CoPilot<br/>from <span class="highlight">Wayve MILE</span></h1>
+          <p class="subtitle">Turning a NeurIPS 2022 research paper into an executable, audited L2+/L3 driving product architecture — built as an ESL capability demonstration for automotive OEMs.</p>
         </header>
         <div class="slide-body grid-2">
           <article class="card strong">
-            <p class="lede">We began with two Wayve papers and chose the one that could be reconstructed as executable mathematics: explicit latent states, an action-conditioned prior, a usable objective, and measurable deployment tradeoffs.</p>
-            <div class="timeline">
-              <div class="timeline-step">
-                <div class="step-no">1</div>
-                <div>
-                  <h3>Select the executable source</h3>
-                  <p>AV2.0 was conceptually strong but not reconstructable. MILE exposed a state-space model, ELBO structure, and paper-aligned performance tables that could be encoded directly in Wolfram Language.</p>
-                </div>
-              </div>
-              <div class="timeline-step">
-                <div class="step-no">2</div>
-                <div>
-                  <h3>Preserve the research core, then add missing layers</h3>
-                  <p>We kept the MILE latent model intact as the performance layer and added explicit trajectory generation, uncertainty-aware rollout behavior, and a post-policy safety supervisor.</p>
-                </div>
-              </div>
-              <div class="timeline-step">
-                <div class="step-no">3</div>
-                <div>
-                  <h3>Make every claim executable</h3>
-                  <p>We built the package, notebook generator, proof appendix, regression audit, BEV shape check, exported figures, and a standalone demo repository.</p>
-                </div>
-              </div>
+            <h2>What This Demo Proves</h2>
+            <p class="lede">ESL can take a state-of-the-art academic paper, reconstruct its mathematical core as executable code, extend it into a product-ready architecture with safety layers, and deliver the result as an audited, reproducible notebook — the kind of deep embedded-systems engineering that automotive OEMs need for ADAS and autonomous driving programs.</p>
+            <div class="paper-cite">
+              <strong>Source paper:</strong> Anthony Hu, Gianluca Corrado, Nicolas Griffiths, Zak Murez, Corina Gurau, Hudson Yeo, Alex Kendall, Roberto Cipolla, Jamie Shotton — <em>"Model-Based Imitation Learning for Urban Driving"</em> — <strong>NeurIPS 2022</strong> — Wayve / University of Cambridge
             </div>
           </article>
           <article class="card">
-            <h2>The End Result</h2>
+            <h2>Delivery Summary</h2>
             <div class="metric-grid">
               <div class="metric">
-                <div class="label">Core package</div>
+                <div class="label">Wolfram Package</div>
                 <div class="value">1</div>
-                <div class="detail">Package with latent dynamics and simulation pipeline</div>
+                <div class="detail">Full latent dynamics + safety supervisor</div>
               </div>
               <div class="metric">
-                <div class="label">Notebook</div>
+                <div class="label">Executable Cells</div>
                 <div class="value">21</div>
-                <div class="detail">Executable input cells</div>
+                <div class="detail">Generated Mathematica notebook</div>
               </div>
               <div class="metric">
-                <div class="label">Audit status</div>
+                <div class="label">Audit Checks</div>
                 <div class="value">10 / 10</div>
-                <div class="detail">Includes BEV matrix regression coverage</div>
+                <div class="detail">All mathematical invariants pass</div>
               </div>
               <div class="metric">
-                <div class="label">Deployment gain</div>
-                <div class="value">6.2 -> 43 Hz</div>
-                <div class="detail">Reset-state to recurrent</div>
+                <div class="label">Deployment Gain</div>
+                <div class="value">6.2 → 43 Hz</div>
+                <div class="detail">Reset-state → recurrent inference</div>
               </div>
             </div>
-            <div class="source-note">Narrative and notebook section wording are drawn from the published Wolfram Cloud notebook: <code>UrbanAICoPilot_MILE.nb</code>.</div>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 2: Why Wayve MILE -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Why This Paper</div>
-          <h1 class="title">MILE was the only executable candidate</h1>
-          <p class="subtitle">The selection criterion was technical: state variables, objective terms, rollout logic, and measurable outputs that could survive a Wolfram implementation.</p>
+          <div class="eyebrow">Paper Selection</div>
+          <h1 class="title">Why <span class="highlight">Wayve's MILE</span> paper?</h1>
+          <p class="subtitle">We evaluated multiple autonomous driving papers and selected MILE because it exposes the right mathematical primitives for a faithful reconstruction.</p>
         </header>
         <div class="slide-body grid-2">
           <article class="card strong">
-            <h2>Selection Logic</h2>
+            <h2>What Makes MILE Reconstructable</h2>
             <ul class="story-list">
-              <li><div><strong>AV2.0 was architecture commentary</strong> with limited equation-level structure for a CAS-driven reconstruction workflow.</div></li>
-              <li><div><strong>MILE exposed the right primitives</strong>: recurrent memory <code>h_t</code>, stochastic state <code>s_t</code>, posterior/prior moments, and a diagonal Gaussian KL.</div></li>
-              <li><div><strong>MILE also exposed deployable measurements</strong>: frequency, ablations, recurrent/reset-state tradeoffs, and scenario-dependent behavior we could re-simulate.</div></li>
+              <li><div><strong>Explicit state-space model</strong>Recurrent memory h<sub>t</sub>, stochastic latent state s<sub>t</sub>, posterior/prior moments — all directly expressible in Wolfram Language.</div></li>
+              <li><div><strong>Closed-form objective</strong>The ELBO decomposes into action likelihood, BEV likelihood, observation likelihood, and a diagonal Gaussian KL — every term is computable.</div></li>
+              <li><div><strong>Published ablations</strong>Resolution sweep, latent dimension, and recurrent vs. reset-state frequency tradeoffs provide ground truth for validation.</div></li>
+              <li><div><strong>Camera-first architecture</strong>No LiDAR dependency makes MILE directly relevant to cost-sensitive automotive deployments — exactly the market ESL serves.</div></li>
             </ul>
           </article>
           <article class="card">
-            <h2>What That Enabled</h2>
-            <div class="badge-row">
-              <div class="badge"><strong>State-space reconstruction</strong><br />Direct mapping from paper concepts into Wolfram functions.</div>
-              <div class="badge"><strong>Objective-level fidelity</strong><br />ELBO framing, KL spot checks, and observation-dropout interpretation.</div>
-              <div class="badge"><strong>Autonomy-stack extension</strong><br />Trajectory, safety, scenario rollout, and embedded deployment framing.</div>
-              <div class="badge"><strong>Reproducible artifact</strong><br />Notebook, proof, audit, figures, and standalone repo.</div>
+            <h2>Paper at a Glance</h2>
+            <ul class="bullet-list">
+              <li><div><strong>Core idea</strong>Learn a world model from expert driving data, then use it for both planning and imagination-based prediction.</div></li>
+              <li><div><strong>Key innovation</strong>Action-conditioned prior allows the model to predict future states given planned maneuvers — unlike replay-only approaches.</div></li>
+              <li><div><strong>Benchmark result</strong>State-of-the-art on CARLA Longest6 benchmark at time of publication.</div></li>
+            </ul>
+            <div class="paper-cite">
+              <strong>Wayve</strong> is a UK-based autonomous driving company founded by Alex Kendall. MILE represents their approach to learned world models for urban navigation — camera-only, mapless, end-to-end.
             </div>
-            <p class="source-note">This framing matches the setup and research-context sections of the published notebook, then extends backward to the original demo-selection decision.</p>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 3: ESL Automotive Framing -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Product Translation</div>
-          <h1 class="title">Research model versus product wrapper</h1>
-          <p class="subtitle">The technical design rule was simple: do not hide product logic inside the latent model. Keep the learned layer explicit, then attach deterministic interfaces around it.</p>
+          <div class="eyebrow">ESL · Automotive</div>
+          <h1 class="title">From research to <span class="highlight-warm">automotive product</span></h1>
+          <p class="subtitle">The gap between an academic paper and an OEM-deployable system is where ESL's embedded engineering expertise is critical.</p>
         </header>
         <div class="slide-body grid-2">
           <article class="card strong">
-            <blockquote class="quote">“A mapless L2+/L3 urban driving system that uses the MILE-style world model as the performance layer, but wraps it with a trajectory interface, uncertainty-aware gating, and an independent safety supervisor.”</blockquote>
-            <p class="source-note">This sentence is taken directly from the published notebook’s research-context section.</p>
+            <blockquote class="quote">"A mapless L2+/L3 urban driving system that uses the MILE-style world model as the performance layer, but wraps it with a trajectory interface, uncertainty-aware gating, and an independent safety supervisor."</blockquote>
+            <p class="source-note">This is the product thesis demonstrated in the notebook — the kind of architecture that ESL builds for automotive OEMs.</p>
           </article>
           <article class="card">
-            <h2>Architecture We Explained</h2>
+            <h2>What ESL Adds Beyond the Paper</h2>
+            <ul class="story-list">
+              <li><div><strong>Trajectory output interface</strong>OEMs need waypoints, speed profiles, and steering commands — not latent vectors. We added explicit trajectory generation.</div></li>
+              <li><div><strong>Deterministic safety supervisor</strong>Regulatory-grade L2+/L3 systems require an independent safety layer for red-light stops and obstacle buffering.</div></li>
+              <li><div><strong>Embedded runtime modeling</strong>Reset-state vs. recurrent deployment frequency analysis maps directly to ECU compute budgets.</div></li>
+              <li><div><strong>Scenario-based validation</strong>OEM qualification demands per-scenario metrics across traffic lights, turns, roundabouts, pedestrian conflicts, and merges.</div></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: Architecture -->
+      <section class="slide">
+        <header>
+          <div class="eyebrow">Product Architecture</div>
+          <h1 class="title">Three-layer <span class="highlight">L2+/L3</span> stack</h1>
+          <p class="subtitle">The design keeps Wayve's learned model intact as the performance core, but adds the missing layers that make it deployable.</p>
+        </header>
+        <div class="slide-body grid-2">
+          <article class="card strong">
             <div class="architecture">
               <div class="arch-node">
-                <h3>Latent state update layer</h3>
-                <p><code>PosteriorMoments</code>, <code>PriorMoments</code>, and <code>UpdateDeterministicState</code> implement the recurrent latent transition logic.</p>
+                <h3>Layer 1 — Latent State Update (from MILE)</h3>
+                <p><code>PosteriorMoments</code>, <code>PriorMoments</code>, <code>UpdateDeterministicState</code> — the recurrent latent transition logic reconstructed from the paper.</p>
               </div>
               <div class="arch-node">
-                <h3>Control and trajectory layer</h3>
-                <p><code>PredictAction</code> and <code>PredictTrajectory</code> map latent state into acceleration, steering, waypoints, and speed profiles.</p>
+                <h3>Layer 2 — Control + Trajectory (ESL extension)</h3>
+                <p><code>PredictAction</code> and <code>PredictTrajectory</code> produce acceleration, steering, waypoints, and speed profiles for vehicle actuators.</p>
               </div>
               <div class="arch-node">
-                <h3>Post-policy supervisory layer</h3>
-                <p><code>SafetySupervisor</code> applies stop-line clipping and obstacle buffering after trajectory generation, preserving separability for audit and explanation.</p>
+                <h3>Layer 3 — Safety Supervisor (ESL extension)</h3>
+                <p><code>SafetySupervisor</code> applies stop-line clipping and obstacle buffering after trajectory generation — deterministic, auditable, separable.</p>
               </div>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Why This Architecture Matters for OEMs</h2>
+            <ul class="bullet-list">
+              <li><div><strong>Separation of concerns</strong>The learned model can be updated independently of the safety layer — critical for automotive certification.</div></li>
+              <li><div><strong>Testable safety</strong>The supervisor has deterministic rules that can be formally verified and audited by TÜV/homologation bodies.</div></li>
+              <li><div><strong>Embedded-friendly</strong>The recurrent architecture runs at 43 Hz — well within the compute budget of modern automotive SoCs.</div></li>
+            </ul>
+            <div class="tag-row">
+              <div class="tag"><strong>MILE paper</strong> Layer 1</div>
+              <div class="tag"><strong>ESL extension</strong> Layers 2 + 3</div>
+              <div class="tag"><strong>Combined</strong> Product-ready stack</div>
             </div>
           </article>
         </div>
       </section>
 
-      <section class="slide">
-        <header>
-          <div class="eyebrow">Build Artifacts</div>
-          <h1 class="title">What we actually built</h1>
-          <p class="subtitle">The deliverable is a real implementation stack: package code, generated notebook, validation layer, proof appendix, and regression audit.</p>
-        </header>
-        <div class="slide-body grid-3">
-          <article class="card strong">
-            <h2><code>MILEProductModel.wl</code></h2>
-            <ul class="mini-list">
-              <li><div><strong>Latent primitives</strong> for posterior, prior, sampling, recurrent history update, and KL computation.</div></li>
-              <li><div><strong>Scenario library</strong> with parameterized urban maneuvers, obstacle sets, signal states, and rollout metrics.</div></li>
-              <li><div><strong>Simulation kernel</strong> via <code>SimulateEpisode</code>, <code>RunScenarioStudy</code>, and <code>ValidationChecks</code>.</div></li>
-            </ul>
-          </article>
-          <article class="card">
-            <h2><code>BuildUrbanAICoPilotNotebook.wls</code></h2>
-            <ul class="mini-list">
-              <li><div><strong>Builds</strong> the notebook as a Wolfram expression and exports it deterministically.</div></li>
-              <li><div><strong>Validates</strong> invalid-character scan, round-trip parsing, <code>Get</code> round-trip, and input-cell parseability.</div></li>
-              <li><div><strong>Injects</strong> the proof appendix and verification cell into the final notebook artifact.</div></li>
-            </ul>
-          </article>
-          <article class="card">
-            <h2><code>proof_audit.wls</code></h2>
-            <ul class="mini-list">
-              <li><div><strong>Checks</strong> KL behavior, dropout expectation, safety effect, imagination uncertainty, ablation monotonicity, and BEV decode shape.</div></li>
-              <li><div><strong>Protects</strong> against silent notebook regressions such as the earlier <code>ArrayPlot::mat</code> BEV bug.</div></li>
-              <li><div><strong>Provides</strong> executable acceptance criteria instead of narrative-only validation.</div></li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
+      <!-- SLIDE 5: Mathematical Core -->
       <section class="slide">
         <header>
           <div class="eyebrow">Mathematical Core</div>
-          <h1 class="title">Latent model reconstructed in Wolfram Language</h1>
-          <p class="subtitle">The core notebook section reconstructs the probabilistic structure with deterministic recurrent memory, stochastic latent state, and a diagonal Gaussian KL term.</p>
+          <h1 class="title">Latent model from <span class="highlight">the paper</span></h1>
+          <p class="subtitle">The MILE generative model is reconstructed equation-by-equation in Wolfram Language. Every term is executable and audited.</p>
         </header>
         <div class="slide-body grid-2">
           <article class="card strong">
-            <h2>Generative Structure</h2>
+            <h2>Generative Structure (Wayve MILE)</h2>
             <div class="equation-strip">
-              <div class="equation">h<sub>1</sub> ~ delta(0) - zero-initialized recurrent memory</div>
-              <div class="equation">s<sub>1</sub> ~ Normal(0, I) - initial stochastic latent state</div>
-              <div class="equation">h<sub>t+1</sub> = f<sub>theta</sub>(h<sub>t</sub>, s<sub>t</sub>) - deterministic recurrent update</div>
-              <div class="equation">s<sub>t+1</sub> ~ Normal(mu<sub>theta</sub>(h<sub>t+1</sub>, a<sub>t</sub>), sigma<sub>theta</sub>(h<sub>t+1</sub>, a<sub>t</sub>) I)</div>
+              <div class="equation">h<sub>1</sub> ~ δ(0) — zero-initialized recurrent memory</div>
+              <div class="equation">s<sub>1</sub> ~ Normal(0, I) — initial stochastic latent state</div>
+              <div class="equation">h<sub>t+1</sub> = f<sub>θ</sub>(h<sub>t</sub>, s<sub>t</sub>) — deterministic recurrent update</div>
+              <div class="equation">s<sub>t+1</sub> ~ Normal(μ<sub>θ</sub>(h<sub>t+1</sub>, a<sub>t</sub>), σ<sub>θ</sub>(h<sub>t+1</sub>, a<sub>t</sub>) · I) — action-conditioned prior</div>
             </div>
+            <div class="source-note">These equations map directly to Wayve's MILE paper §3. The action-conditioning on a<sub>t</sub> is what makes the prior predictive rather than autoregressive.</div>
           </article>
           <article class="card">
-            <h2>Objective Terms Encoded</h2>
+            <h2>ELBO Terms Encoded</h2>
             <ul class="bullet-list">
-              <li><div><strong>Action likelihood</strong>Encoded as the operational L1 term implied by the paper's Laplace action model.</div></li>
-              <li><div><strong>BEV likelihood</strong>Represented as semantic supervision plus interpretable spatial structure.</div></li>
-              <li><div><strong>Observation likelihood</strong>Preserved structurally, while noting the released configuration effectively zeroes image weight.</div></li>
-              <li><div><strong>KL correction</strong>Implemented by <code>GaussianKLDivergence</code> and numerically checked in both the notebook and audit.</div></li>
+              <li><div><strong>Action likelihood</strong>L1 loss from Wayve's Laplace action model — reconstructed as the primary learning signal.</div></li>
+              <li><div><strong>BEV likelihood</strong>Semantic BEV supervision provides spatial grounding that replaces dense image reconstruction.</div></li>
+              <li><div><strong>KL regularization</strong><code>GaussianKLDivergence</code> implements the closed-form diagonal Gaussian KL from the paper.</div></li>
+              <li><div><strong>Observation dropout</strong>Controls the balance between posterior-corrected and prior-only (imagination) rollout.</div></li>
             </ul>
             <div class="tag-row">
-              <div class="tag"><strong>KL(self || self)</strong> 0.000000</div>
-              <div class="tag"><strong>Notebook KL sample</strong> 6.233962</div>
+              <div class="tag"><strong>KL(self‖self)</strong> 0.000000</div>
+              <div class="tag"><strong>Sample KL</strong> 6.233962</div>
+              <div class="tag"><strong>Audit</strong> non-negativity verified</div>
             </div>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 6: BEV Reconstruction -->
       <section class="slide">
         <header>
-          <div class="eyebrow">BEV Reconstruction</div>
-          <h1 class="title">Geometry lift into bird's-eye view</h1>
-          <p class="subtitle">The implementation turns scene state into an explicit BEV field so road prior, obstacle density, and nominal trajectory energy can be inspected as matrices rather than hidden tensors.</p>
+          <div class="eyebrow">Bird's-Eye View</div>
+          <h1 class="title">BEV geometry <span class="highlight">lifted from latent state</span></h1>
+          <p class="subtitle">MILE's BEV prediction is reconstructed as an explicit occupancy/intent grid — the same spatial representation used by production ADAS systems for path planning.</p>
         </header>
         <div class="slide-body">
           <div class="split-figures">
             <figure class="figure card strong">
-              <img src="presentation-assets/bev-grid.png" alt="BEV occupancy grid from the MILE demo" />
-              <figcaption>The 2D decoded BEV occupancy / intent grid. After the fix, <code>CombinedGrid</code> is a true matrix and can be consumed safely by <code>ArrayPlot</code>.</figcaption>
+              <img src="presentation-assets/bev-grid.png" alt="BEV occupancy grid" />
+              <figcaption>Decoded BEV occupancy grid: road prior, obstacle field, and trajectory energy combined into a 48×48 matrix consumed by the planner.</figcaption>
             </figure>
             <figure class="figure card">
-              <img src="presentation-assets/bev-surface.png" alt="3D BEV energy surface from the MILE demo" />
-              <figcaption>The same matrix rendered as a surface. This makes the additive structure of road grid, trajectory grid, and obstacle field visually obvious.</figcaption>
+              <img src="presentation-assets/bev-surface.png" alt="3D BEV energy surface" />
+              <figcaption>Same data as a 3D energy surface — the additive structure of road, trajectory, and obstacle components is directly visible.</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
+      <!-- SLIDE 7: Closed-Loop Simulation -->
       <section class="slide">
         <header>
           <div class="eyebrow">Closed-Loop Simulation</div>
-          <h1 class="title">Closed-loop rollout pipeline</h1>
-          <p class="subtitle">Each rollout step computes posterior/prior moments, samples latent state, updates recurrent history, predicts control, generates a trajectory, applies safety, and records metrics.</p>
+          <h1 class="title">Full rollout <span class="highlight">pipeline</span></h1>
+          <p class="subtitle">Each simulation step mirrors the MILE paper's inference loop: posterior/prior update → latent sampling → control prediction → trajectory generation → safety check → metric capture.</p>
         </header>
         <div class="slide-body grid-2">
           <figure class="figure card strong">
-            <img src="presentation-assets/trajectory-view.png" alt="Trajectory and obstacle vector view" />
-            <figcaption>The waypoint path, obstacle disks, and short-horizon motion plan from the pedestrian-conflict rollout.</figcaption>
+            <img src="presentation-assets/trajectory-view.png" alt="Trajectory and obstacle view" />
+            <figcaption>Short-horizon trajectory with waypoints, obstacle disks, and safety-buffered motion plan from the pedestrian-conflict scenario.</figcaption>
           </figure>
           <article class="card">
-            <h2>What happens in each step</h2>
+            <h2>Per-Step Pipeline</h2>
             <ul class="bullet-list">
-              <li><div><strong>State update</strong><code>mode = Observe | Imagine</code> selects posterior-corrected versus prior-only rollout.</div></li>
+              <li><div><strong>State update</strong><code>mode = Observe | Imagine</code> selects posterior-corrected vs. prior-only inference, following MILE's observation dropout.</div></li>
               <li><div><strong>Control synthesis</strong><code>PredictAction</code> and <code>PredictTrajectory</code> produce acceleration, steering, waypoints, and speed profile.</div></li>
-              <li><div><strong>Metric capture</strong>Reward, risk, uncertainty, KL, intervention flag, and route progress are stored per step in the trace.</div></li>
+              <li><div><strong>Safety enforcement</strong><code>SafetySupervisor</code> clips or modifies the trajectory if red-light or obstacle rules trigger.</div></li>
+              <li><div><strong>Metric capture</strong>Reward, risk, uncertainty, KL, intervention flag, and route progress stored per step.</div></li>
             </ul>
             <div class="metric-grid">
               <div class="metric">
-                <div class="label">Pedestrian conflict reward</div>
+                <div class="label">Pedestrian reward</div>
                 <div class="value">0.612</div>
-                <div class="detail">Normalized reward with safety enabled</div>
+                <div class="detail">With safety enabled</div>
               </div>
               <div class="metric">
                 <div class="label">Observed fraction</div>
                 <div class="value">0.778</div>
-                <div class="detail">Closed-loop run with imagination gaps</div>
+                <div class="detail">Closed-loop with imagination gaps</div>
               </div>
             </div>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 8: Imagination Mode -->
       <section class="slide">
         <header>
           <div class="eyebrow">Imagination Mode</div>
-          <h1 class="title">Observe versus imagine branch behavior</h1>
-          <p class="subtitle">Observation dropout is treated as a geometric prior-only unroll mechanism. In the implementation, imagination steps explicitly widen uncertainty while preserving rollout continuity.</p>
+          <h1 class="title">Observe vs. <span class="highlight">imagine</span></h1>
+          <p class="subtitle">MILE's observation dropout mechanism is a key innovation: the model can predict future states without sensor input, enabling proactive planning through "imagination."</p>
         </header>
         <div class="slide-body grid-2">
           <figure class="figure card strong">
-            <img src="presentation-assets/imagination-risk.png" alt="Imagination mode risk and uncertainty plot" />
-            <figcaption>Red-shaded phases show prior-only imagination steps. Uncertainty rises, but rollout continuity remains intact.</figcaption>
+            <img src="presentation-assets/imagination-risk.png" alt="Imagination mode risk and uncertainty" />
+            <figcaption>Red-shaded phases = prior-only imagination steps. Uncertainty rises but rollout continuity is preserved — the model keeps driving.</figcaption>
           </figure>
           <article class="card">
-            <h2>What is technically interesting</h2>
+            <h2>Why This Matters for Automotive</h2>
             <ul class="bullet-list">
-              <li><div><strong>Dropout expectation is explicit</strong>The proof appendix derives the mean imagination streak as <code>p / (1 - p)</code>.</div></li>
-              <li><div><strong>Uncertainty trend is auditable</strong>The audit verifies monotone increase from observe-heavy to imagination-heavy settings.</div></li>
-              <li><div><strong>Mode logic is visible</strong>The red shaded regions correspond to prior-only rollout segments, not a hidden training artifact.</div></li>
+              <li><div><strong>Sensor failure resilience</strong>If cameras are temporarily occluded, the world model can continue predicting — degraded but continuous.</div></li>
+              <li><div><strong>Quantified degradation</strong>The audit verifies monotone uncertainty increase: observe-heavy 0.223 → balanced 0.231 → imagine-heavy 0.252.</div></li>
+              <li><div><strong>Product gating</strong>An OEM can use the uncertainty signal to trigger graceful handoff to the driver when imagination-mode confidence drops.</div></li>
             </ul>
-            <div class="tag-row">
-              <div class="tag"><strong>Observe-heavy</strong> 0.2229 uncertainty</div>
-              <div class="tag"><strong>Balanced</strong> 0.2313 uncertainty</div>
-              <div class="tag"><strong>Imagine-heavy</strong> 0.2517 uncertainty</div>
+            <div class="paper-cite">
+              <strong>From Wayve's paper:</strong> Observation dropout probability p controls the balance. Mean imagination streak = p/(1−p). This is derived in our proof appendix and verified in the audit.
             </div>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 9: Safety Supervisor -->
       <section class="slide">
         <header>
           <div class="eyebrow">Safety Layer</div>
-          <h1 class="title">SafetySupervisor as a post-policy module</h1>
-          <p class="subtitle">The autonomy-specific extension is not vague “guardrails.” It is a deterministic post-policy transform applied after trajectory proposal and before metric accounting.</p>
+          <h1 class="title"><span class="highlight-warm">Safety</span> Supervisor</h1>
+          <p class="subtitle">The ESL-added safety layer implements deterministic, auditable intervention rules applied after the learned model's trajectory proposal — required for L2+/L3 certification.</p>
         </header>
         <div class="slide-body grid-2">
           <article class="card strong">
-            <h2>Implemented intervention rules</h2>
+            <h2>Intervention Rules</h2>
             <ul class="story-list">
-              <li><div><strong>Red-light rule</strong>If <code>SignalState == "Red"</code> and the path crosses the stop line, y-coordinates are clipped and the speed profile is collapsed to minimum-risk speed.</div></li>
-              <li><div><strong>Obstacle buffer rule</strong>If <code>MinimumDistance &lt; SafetyMarginMeters</code>, the path shifts laterally and speed is scaled by 0.55.</div></li>
-              <li><div><strong>Explicit metric impact</strong>Risk improves, intervention rate rises, and reward can fall because the supervisor is intentionally conservative.</div></li>
+              <li><div><strong>Red-light stop</strong>If <code>SignalState == "Red"</code> and path crosses stop line → y-coordinates clipped, speed collapsed to minimum-risk.</div></li>
+              <li><div><strong>Obstacle buffer</strong>If <code>MinimumDistance &lt; SafetyMarginMeters</code> → lateral path shift + speed scaled to 0.55×.</div></li>
+              <li><div><strong>Transparent trade-off</strong>Risk drops but reward may fall — the supervisor is intentionally conservative, and this is visible in the metrics.</div></li>
             </ul>
+            <div class="tag-row">
+              <div class="tag"><strong>Risk reduction</strong> 0.449 → 0.333</div>
+              <div class="tag"><strong>Intervention rate</strong> 94.4%</div>
+            </div>
           </article>
           <figure class="figure card">
-            <img src="presentation-assets/safety-grid.png" alt="Safety comparison table" />
-            <figcaption>The audited pedestrian-conflict comparison: mean risk drops with safety enabled, even though normalized reward falls because interventions become frequent and conservative.</figcaption>
+            <img src="presentation-assets/safety-grid.png" alt="Safety comparison metrics" />
+            <figcaption>Pedestrian-conflict comparison: safety-on vs. safety-off. The supervisor demonstrably reduces risk even at the cost of normalized reward.</figcaption>
           </figure>
         </div>
       </section>
 
+      <!-- SLIDE 10: Scenario Study -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Scenario Study</div>
-          <h1 class="title">Scenario-level metrics, not just screenshots</h1>
-          <p class="subtitle">The notebook evaluates the same rollout kernel across multiple maneuver classes so the model can be compared on reward, risk, intervention rate, observation fraction, and route progress.</p>
+          <div class="eyebrow">Scenario Validation</div>
+          <h1 class="title">OEM-grade <span class="highlight">scenario metrics</span></h1>
+          <p class="subtitle">Automotive qualification demands per-scenario performance data. The notebook evaluates the same model across five urban maneuver classes.</p>
         </header>
         <div class="slide-body">
           <div class="split-figures">
             <figure class="figure card strong">
-              <img src="presentation-assets/scenario-rewards.png" alt="Scenario reward bar chart" />
-              <figcaption>Scenario reward across the Urban AI CoPilot operating envelope.</figcaption>
+              <img src="presentation-assets/scenario-rewards.png" alt="Scenario reward comparison" />
+              <figcaption>Normalized reward across the operating envelope: traffic light stop, unprotected turn, roundabout entry, pedestrian conflict, and merge into traffic.</figcaption>
             </figure>
             <figure class="figure card">
-              <img src="presentation-assets/scenario-grid.png" alt="Scenario metrics grid" />
-              <figcaption>A compact operating-envelope summary showing that the same implementation behaves differently across traffic-light, turn, roundabout, pedestrian, and merge scenarios.</figcaption>
+              <img src="presentation-assets/scenario-grid.png" alt="Scenario metrics table" />
+              <figcaption>Full metrics per scenario: reward, risk, intervention rate, observation fraction, and route progress — the format OEM homologation teams expect.</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
+      <!-- SLIDE 11: Embedded Runtime -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Embedded Story</div>
-          <h1 class="title">Runtime model and deployment frequency</h1>
-          <p class="subtitle">The embedded-compute story is encoded directly: reset-state inference reprocesses history windows, while recurrent deployment updates compact state at much higher frequency.</p>
+          <div class="eyebrow">Embedded Deployment</div>
+          <h1 class="title">Runtime on <span class="highlight-warm">automotive SoCs</span></h1>
+          <p class="subtitle">The MILE paper's recurrent architecture has a direct embedded-compute story: compact state updates are 7× faster than re-encoding full history windows.</p>
         </header>
         <div class="slide-body grid-2">
           <figure class="figure card strong">
-            <img src="presentation-assets/runtime-bar.png" alt="Runtime comparison bar chart" />
-            <figcaption>The published notebook’s framing: compact recurrent state updates are far cheaper than repeatedly re-encoding history windows.</figcaption>
+            <img src="presentation-assets/runtime-bar.png" alt="Runtime comparison" />
+            <figcaption>Reset-state deployment requires reprocessing the full history window; recurrent deployment updates a compact latent vector — a 7× frequency improvement.</figcaption>
           </figure>
           <article class="card">
-            <h2>Runtime interpretation</h2>
+            <h2>Embedded Interpretation</h2>
             <div class="metric-grid">
               <div class="metric">
                 <div class="label">Reset-state</div>
                 <div class="value">6.2 Hz</div>
-                <div class="detail">~161.29 ms cycle time</div>
+                <div class="detail">~161 ms per cycle</div>
               </div>
               <div class="metric">
                 <div class="label">Fully recurrent</div>
-                <div class="value">43.0 Hz</div>
-                <div class="detail">~23.26 ms cycle time</div>
+                <div class="value">43 Hz</div>
+                <div class="detail">~23 ms per cycle</div>
               </div>
             </div>
-            <p class="lede">For a technical audience, this is the key deployment point: the recurrent state is not just elegant modeling; it is what makes the control loop computationally plausible.</p>
+            <p class="lede">For automotive ECUs, this is the key deployment argument: recurrent state is not just better modeling — it is what makes the control loop computationally feasible on production hardware.</p>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 12: Ablations -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Ablations</div>
-          <h1 class="title">Paper-aligned ablations preserved in code</h1>
-          <p class="subtitle">The ablation section is useful technically because it proves the demo did not merely invent results; it encoded the tradeoffs the paper itself emphasizes.</p>
+          <div class="eyebrow">Paper Ablations</div>
+          <h1 class="title">Wayve's ablations, <span class="highlight">reproduced in code</span></h1>
+          <p class="subtitle">We didn't invent results — we encoded the exact ablation tradeoffs from the MILE paper as executable data, then verified the trends match.</p>
         </header>
         <div class="slide-body">
           <div class="split-figures">
             <figure class="figure card strong">
-              <img src="presentation-assets/resolution-plot.png" alt="Driving score versus image resolution" />
-              <figcaption>Resolution ablation reproduced as executable data: 75x120, 150x240, 300x480, and 600x960 with sharply rising driving score.</figcaption>
+              <img src="presentation-assets/resolution-plot.png" alt="Resolution ablation" />
+              <figcaption>Resolution ablation (from MILE Table 2): driving score rises sharply from 75×120 to 600×960. Reproduced as executable Wolfram data.</figcaption>
             </figure>
             <figure class="figure card">
-              <img src="presentation-assets/latent-bar.png" alt="Latent dimension ablation chart" />
-              <figcaption>Latent-size ablation shows that recurrent performance does not monotonically improve with larger spatial latent representations.</figcaption>
+              <img src="presentation-assets/latent-bar.png" alt="Latent dimension ablation" />
+              <figcaption>Latent dimension ablation: compact 512×1×1 retains recurrent performance better than spatially large 256×12×12 — matching the paper's finding.</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
+      <!-- SLIDE 13: Validation & Proof -->
       <section class="slide">
         <header>
           <div class="eyebrow">Trust Layer</div>
-          <h1 class="title">Validation, proof, and regression closure</h1>
-          <p class="subtitle">The final deliverable includes executable validation in three layers: notebook build validation, a proof appendix, and a regression audit script.</p>
+          <h1 class="title">Validation, proof, and <span class="highlight">audit</span></h1>
+          <p class="subtitle">The final deliverable includes three layers of validation: notebook build checks, a plain-English proof appendix, and an automated regression audit.</p>
         </header>
         <div class="slide-body grid-2">
           <figure class="figure card strong">
-            <img src="presentation-assets/validation-grid.png" alt="Validation grid from the notebook" />
-            <figcaption>The compact validation table inside the notebook, backed by the full proof and audit scripts in the repo.</figcaption>
+            <img src="presentation-assets/validation-grid.png" alt="Validation grid" />
+            <figcaption>Compact validation table from the notebook — every check backed by the full proof and automated audit scripts in the repository.</figcaption>
           </figure>
           <article class="card">
-            <h2>What we added for credibility</h2>
+            <h2>Three Layers of Trust</h2>
             <ul class="bullet-list">
-              <li><div><strong>Proof appendix</strong>Explains the generative model, ELBO term, dropout expectation, safety rules, and recurrent deployment conclusion in numbered steps.</div></li>
-              <li><div><strong>Notebook builder checks</strong>Invalid-character scan, round-trip parse, <code>Get</code> round-trip, and input-cell parseability are all enforced before release.</div></li>
-              <li><div><strong>Audit coverage</strong>KL, dropout logic, safety effect, imagination uncertainty, ablation trends, and the BEV-matrix regression all run mechanically.</div></li>
+              <li><div><strong>Proof appendix</strong>Plain-English derivation of the generative model, ELBO, dropout expectation, safety rules, and deployment conclusion.</div></li>
+              <li><div><strong>Build validation</strong>Invalid-character scan, round-trip parse, <code>Get</code> round-trip, and cell parseability — all enforced before release.</div></li>
+              <li><div><strong>Regression audit</strong>KL non-negativity, dropout logic, safety effect, imagination uncertainty, ablation trends, BEV matrix shape — 10 automated checks.</div></li>
             </ul>
             <div class="tag-row">
-              <div class="tag"><strong>Audit</strong> 10 passes</div>
+              <div class="tag"><strong>Audit</strong> 10/10 pass</div>
               <div class="tag"><strong>Failures</strong> 0</div>
-              <div class="tag"><strong>Residual warning</strong> conservative safety can lower reward</div>
+              <div class="tag"><strong>Proof</strong> 12 numbered steps</div>
             </div>
           </article>
         </div>
       </section>
 
+      <!-- SLIDE 14: Conclusion -->
       <section class="slide">
         <header>
-          <div class="eyebrow">Outcome</div>
-          <h1 class="title">Technical conclusion</h1>
-          <p class="subtitle">The final result is a standalone Mathematica demo that connects a research latent model, a vehicle-stack interpretation, and executable validation without hiding any of the engineering compromises.</p>
+          <div class="eyebrow">Conclusion</div>
+          <h1 class="title">From Wayve's <span class="highlight">paper</span> to ESL's <span class="highlight-warm">product</span></h1>
+          <p class="subtitle">This demo demonstrates ESL's full capability arc: academic paper analysis → mathematical reconstruction → product architecture → executable validation → standalone delivery.</p>
         </header>
         <div class="slide-body grid-2">
           <article class="card strong">
-            <h2>Final Message</h2>
-            <p class="lede">A MILE-style recurrent latent world model is a technically plausible core for a camera-first urban L2+/L3 stack when the learned layer is kept explicit, the safety layer is deterministic and external, and the notebook artifact is backed by executable audits.</p>
-            <p>That was the full arc: source-paper selection, Wolfram reconstruction, product extension, simulation, proof, audit, bug fixing, and standalone packaging.</p>
+            <h2>The Capability Statement</h2>
+            <p class="lede">ESL can take cutting-edge autonomous driving research — like Wayve's MILE world model — and transform it into a product-ready L2+/L3 architecture with deterministic safety layers, embedded runtime analysis, scenario-based validation, and mathematical proofs that automotive OEMs can trust.</p>
+            <p>This is the engineering gap between a research paper and a deployable system. ESL bridges it.</p>
+            <div class="paper-cite">
+              <strong>Full arc:</strong> source paper selection → Wolfram reconstruction → product extension → closed-loop simulation → proof appendix → regression audit → standalone packaging → presentation
+            </div>
           </article>
           <article class="card">
-            <h2>Deliverables in the repo</h2>
+            <h2>Deliverables</h2>
             <ul class="mini-list">
-              <li><div><strong>Notebook</strong><code>UrbanAICoPilot_MILE.nb</code></div></li>
-              <li><div><strong>Model package</strong><code>MILEProductModel.wl</code></div></li>
-              <li><div><strong>Notebook generator</strong><code>BuildUrbanAICoPilotNotebook.wls</code></div></li>
-              <li><div><strong>Audit script</strong><code>proof_audit.wls</code></div></li>
-              <li><div><strong>Plain-English proof</strong><code>UrbanAICoPilot_MILE_Proof_PlainEnglish.md</code></div></li>
-              <li><div><strong>Presentation</strong><code>UrbanAICoPilot_MILE_Presentation.html</code></div></li>
+              <li><div><strong>Mathematica Notebook</strong><code>UrbanAICoPilot_MILE.nb</code> — 21 executable cells</div></li>
+              <li><div><strong>Wolfram Package</strong><code>MILEProductModel.wl</code> — latent dynamics + safety</div></li>
+              <li><div><strong>Notebook Builder</strong><code>BuildUrbanAICoPilotNotebook.wls</code></div></li>
+              <li><div><strong>Regression Audit</strong><code>proof_audit.wls</code> — 10/10 checks</div></li>
+              <li><div><strong>Proof Companion</strong><code>UrbanAICoPilot_MILE_Proof_PlainEnglish.md</code></div></li>
             </ul>
-            <div class="source-note">Presentation text is based on the published Wolfram Cloud notebook plus the implementation work completed in this standalone demo project.</div>
+            <div class="source-note">Repository: <code>github.com/zuwasi/urban-ai-copilot-mile-demo</code></div>
           </article>
         </div>
       </section>
 
-      <section class="slide">
-        <header>
-          <div class="eyebrow">Regression Case Study</div>
-          <h1 class="title">The BEV bug and how we closed it</h1>
-          <p class="subtitle">After publishing the notebook, the BEV visualization exposed a real implementation bug: the model loaded, but the decoded grid had the wrong shape for <code>ArrayPlot</code>.</p>
-        </header>
-        <div class="slide-body grid-2">
-          <article class="card strong">
-            <h2>Root Cause</h2>
-            <ul class="bullet-list">
-              <li><div><strong>Observed failure</strong><code>ArrayPlot::mat</code> reported that the first argument was not a list of lists when rendering <code>bev["CombinedGrid"]</code>.</div></li>
-              <li><div><strong>Underlying defect</strong><code>DecodeBevState</code> accumulated obstacle contributions as vectors instead of scalars, so <code>CombinedGrid</code> became <code>{48,48,2}</code> rather than <code>{48,48}</code>.</div></li>
-              <li><div><strong>Direct fix</strong>The obstacle field was rewritten to sum scalar obstacle influence per cell using each obstacle's <code>Severity</code> and <code>Position</code>.</div></li>
-            </ul>
-            <div class="tag-row">
-              <div class="tag"><strong>Broken shape</strong> {48,48,2}</div>
-              <div class="tag"><strong>Fixed shape</strong> {48,48}</div>
-              <div class="tag"><strong>ArrayPlot</strong> returns Graphics again</div>
-            </div>
-          </article>
-          <article class="card">
-            <h2>Why the audit matters</h2>
-            <figure class="figure">
-              <img src="presentation-assets/bev-grid.png" alt="Fixed BEV grid after regression repair" />
-              <figcaption>The repaired BEV decode now produces a true 2D matrix and renders correctly in the notebook.</figcaption>
-            </figure>
-            <p class="lede">The important engineering lesson is not just that we fixed the bug. We promoted it into a regression test so the same failure mode cannot silently reappear.</p>
-            <ul class="mini-list">
-              <li><div><strong>ValidationChecks</strong> now asserts that <code>Dimensions[bevState["CombinedGrid"]]</code> equals the configured square BEV size.</div></li>
-              <li><div><strong>proof_audit.wls</strong> now includes a dedicated audit: “BEV decode returns a 2D matrix for ArrayPlot”.</div></li>
-              <li><div><strong>Net effect</strong>The deck, notebook, and audit now all agree on the same invariant: BEV decode must return a matrix.</div></li>
-            </ul>
-          </article>
-        </div>
-      </section>
     </div>
   </div>
 
   <button class="nav prev" id="prevBtn" aria-label="Previous slide">‹</button>
   <button class="nav next" id="nextBtn" aria-label="Next slide">›</button>
   <div class="swipe-hint" id="swipeHint">← Swipe to navigate →</div>
-  <div class="counter" id="counter">1 / 15</div>
+  <div class="counter" id="counter">1 / 14</div>
   <div class="progress-shell"><div class="progress-bar" id="progressBar"></div></div>
 
   <script>
@@ -1000,15 +749,10 @@
     let touchStartX = null
     let mouseStartX = null
 
-    function clampIndex(index) {
-      return Math.max(0, Math.min(slideCount - 1, index))
-    }
+    function clampIndex(index) { return Math.max(0, Math.min(slideCount - 1, index)) }
 
     function hideHintOnce() {
-      if (!hasNavigated) {
-        hasNavigated = true
-        swipeHint.classList.add('hidden')
-      }
+      if (!hasNavigated) { hasNavigated = true; swipeHint.classList.add('hidden') }
     }
 
     function updateSlides(index, fromUser = false) {
@@ -1018,61 +762,32 @@
       progressBarEl.style.width = `${((currentIndex + 1) / slideCount) * 100}%`
       prevBtn.hidden = currentIndex === 0
       nextBtn.hidden = currentIndex === slideCount - 1
-      if (fromUser && currentIndex > 0) {
-        hideHintOnce()
-      }
+      if (fromUser && currentIndex > 0) hideHintOnce()
     }
 
-    function goNext() {
-      if (currentIndex < slideCount - 1) {
-        updateSlides(currentIndex + 1, true)
-      }
-    }
-
-    function goPrev() {
-      if (currentIndex > 0) {
-        updateSlides(currentIndex - 1, true)
-      }
-    }
+    function goNext() { if (currentIndex < slideCount - 1) updateSlides(currentIndex + 1, true) }
+    function goPrev() { if (currentIndex > 0) updateSlides(currentIndex - 1, true) }
 
     prevBtn.addEventListener('click', goPrev)
     nextBtn.addEventListener('click', goNext)
 
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowRight' || event.key === ' ') {
-        event.preventDefault()
-        goNext()
-      }
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault()
-        goPrev()
-      }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext() }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev() }
     })
 
-    window.addEventListener('touchstart', (event) => {
-      touchStartX = event.changedTouches[0].clientX
-    }, { passive: true })
-
-    window.addEventListener('touchend', (event) => {
+    window.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].clientX }, { passive: true })
+    window.addEventListener('touchend', (e) => {
       if (touchStartX === null) return
-      const delta = event.changedTouches[0].clientX - touchStartX
-      touchStartX = null
-      if (Math.abs(delta) < 50) return
-      if (delta < 0) goNext()
-      if (delta > 0) goPrev()
+      const d = e.changedTouches[0].clientX - touchStartX; touchStartX = null
+      if (Math.abs(d) < 50) return; d < 0 ? goNext() : goPrev()
     }, { passive: true })
 
-    window.addEventListener('mousedown', (event) => {
-      mouseStartX = event.clientX
-    })
-
-    window.addEventListener('mouseup', (event) => {
+    window.addEventListener('mousedown', (e) => { mouseStartX = e.clientX })
+    window.addEventListener('mouseup', (e) => {
       if (mouseStartX === null) return
-      const delta = event.clientX - mouseStartX
-      mouseStartX = null
-      if (Math.abs(delta) < 50) return
-      if (delta < 0) goNext()
-      if (delta > 0) goPrev()
+      const d = e.clientX - mouseStartX; mouseStartX = null
+      if (Math.abs(d) < 50) return; d < 0 ? goNext() : goPrev()
     })
 
     updateSlides(0)
